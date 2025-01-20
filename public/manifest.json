@@ -1,11 +1,11 @@
 {
   "manifest_version": 3,
   "name": "Level Editor",
-  "description": "Design 3D platform levels.",
+  "description": "Design Boxel Nomad Levels.",
   "version": "0.0.1",
   "action": {
     "default_popup": "index.html",
-    "default_title": "Level Editor"
+    "default_title": "Boxel Create"
   },
   "icons": { 
     "16": "img/png/BoxelCreate16.png", 
