@@ -8,8 +8,8 @@
     "default_title": "Level Editor"
   },
   "icons": { 
-    "16": "img/png/icon16.png", 
-    "48": "img/png/icon48.png", 
-    "128": "img/png/icon128.png"
+    "16": "img/png/BoxelCreate16.png", 
+    "48": "img/png/BoxelCreate48.png", 
+    "128": "img/png/BoxelCreate128.png"
   }
 }
