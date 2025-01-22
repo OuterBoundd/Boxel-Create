@@ -2,15 +2,27 @@
 @import 'selector';
 @import 'icons';
 
+@mixin font-face($name, $path, $weight: 400, $style: normal, $format: "woff2") {
+	@font-face {
+	  font-family: $name;
+	  src: url("#{$path}.#{$format}") format("#{$format}");
+	  font-weight: $weight;
+	  font-style: $style;
+	}
+  }
+  @include font-face("Comfortaa", "/files/fonts/Comfortaa-Regular", 400, normal, "woff2");
+
+
 /* Global styling */
-* {
+* {	  
+	font-family: Comfortaa;
+	font-weight: 400;
 	box-sizing: border-box;
 	user-select: none;
 	font-size: 100%;
 }
 
 html {
-	font-family: Arial, Helvetica, sans-serif;
 	text-shadow: 0.0625rem 0.0625rem 0.0625rem rgba(0, 0, 0, 0.5);
 	font-size: clamp(16px, 4vh, 32px);
 	line-height: clamp(16px, 4vh, 32px);
@@ -21,7 +33,7 @@ html {
 		width: 100%;
 		height: 100%;
 		margin: 0;
-		background-color: #161616;
+		background-color: #060f1c;
 		overflow: hidden;
 	}
 
@@ -32,7 +44,7 @@ html {
 	}
 
 	canvas {
-		background-color: #333333;
+		background-color: #070b11;
 		image-rendering: pixelated;
 		position: relative;
 		width: 100%;

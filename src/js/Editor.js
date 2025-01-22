@@ -1,4 +1,4 @@
-import { Color, HemisphereLight, PerspectiveCamera, Scene, Vector3 } from 'three';
+import { Color, HemisphereLight, PerspectiveCamera, PointLight, Scene, SphereGeometry, Vector3 } from 'three';
 import { TransformControls } from 'three/examples/jsm/controls/TransformControls';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { Cube } from './Cube';
@@ -8,8 +8,11 @@ import { UI as $ } from './UI';
 class Editor {
 	constructor() {
 		this.scene = new Scene();
-		this.camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.01, 100);
-		this.camera.position.z = 5;
+		this.camera = new PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 100);
+		this.camera.position.z = 10;
+		this.camera.position.y = 5;
+		this.camera.position.x = 10;
+		this.camera.far = 150000000;
 		this.clipboard = [];
 		this.keys = { ShiftLeft: false };
 		this.mode = 'object'; // 2 modes: "object" and "edit"
@@ -27,7 +30,7 @@ class Editor {
 		this.controlsTransform.pointer = new Vector3();
 		this.setTransformMode('translate');
 		this.controlsOrbit = new OrbitControls(this.camera, this.game.renderer.domElement);
-		this.controlsOrbit.enableRotate = false;
+		this.controlsOrbit.enableRotate = true;
 		this.controlsOrbit.mouseButtons = { LEFT: 2, MIDDLE: 2, RIGHT: 2 };
 		this.controlsOrbit.zoomSpeed = 3;
 
@@ -38,12 +41,16 @@ class Editor {
 		this.game.outlinePass.edgeStrength = 3; // Default 3
 		this.game.outlinePass.edgeGlow = 0; // Default 0
 		this.game.outlinePass.edgeThickness = 0.25; // Default 1
-		this.game.outlinePass.visibleEdgeColor = new Color('#E8BE7F');
-		this.game.outlinePass.hiddenEdgeColor = new Color('#E8BE7F');
+		this.game.outlinePass.visibleEdgeColor = new Color('#57cbab');
+		this.game.outlinePass.hiddenEdgeColor = new Color('#38a793');
 		this.game.outlinePass.selectedObjects = [this.selector.selectedObjects];
 
 		// Add event listeners
 		this.addEventListeners();
+
+		this.game.renderer.domElement.addEventListener('contextmenu', (event) => {
+			event.preventDefault();
+		});
 
 		// Test Shape logic
 		this.test();
@@ -54,13 +61,14 @@ class Editor {
 		this.isActive = true;
 
 		// Add basic environment light
-		var hemisphere = new HemisphereLight('#ffffff', '#000000', 1);
+		var hemisphere = new HemisphereLight('#cff1ff', '#527a87', 1);
 		hemisphere.position.set(0, 1, 2);
 		this.scene.add(hemisphere);
 
-		// Add basic cube
+		// Add basic shapes
 		var cube = new Cube();
 		cube.setTexture(this.game.assets.textures.cache['grass-fairway']);
+		cube.position.set(0, 0, 0)
 		this.scene.add(cube);
 
 		// Add controls
@@ -224,6 +232,21 @@ class Editor {
 		return collection;
 	}
 
+	GoToSelected() {
+		var collection = this.selector.collection;
+
+		// Loop through collection
+		for (var i = 0; i < collection.length; i++) {
+			var object = collection[i];
+			this.selector.deselectObject(object);
+			object.removeFromParent();
+		}
+
+		this.scene.selectedObjects.position
+		this.updateEditor(); // Dispatch refresh to UI
+		return collection;
+	}
+
 	cutSelected() {
 		this.clipboard = this.deleteSelected();
 	}
@@ -285,11 +308,15 @@ class Editor {
 	keyDown(e) {
 		if (e.repeat) return;
 		if (e.code == 'KeyG') this.transformSelected();
-		if (e.code == 'KeyR') this.setTransformMode('rotate');
-		if (e.code == 'KeyS') this.setTransformMode('scale');
-		if (e.code == 'KeyT') this.setTransformMode('translate');
-		if (e.code == 'ControlLeft') this.setSnap(1, 15, 1);
-		if (e.code == 'KeyD' && e.shiftKey == true) { this.duplicateSelected(); this.keyDown({ code: 'KeyG' }); /* Spoof "transformSelected" */ }
+		if (e.code == 'KeyE') this.setTransformMode('rotate');
+		if (e.code == 'KeyW') this.setTransformMode('scale');
+		if (e.code == 'KeyQ') this.setTransformMode('translate');
+		if (e.code == 'KeyF' && e.shiftKey == true) {this.scene.camera.position = GoToSelected().position};
+		if (e.code == 'KeyA' && e.shiftKey == true) { this.setSnap(1, 15, 1)};
+		if (e.code == 'KeyA' && e.ctrlKey == true) { this.setSnap(0, 0, 0)};
+		if (e.code == 'KeyD' && e.shiftKey == true) { this.duplicateSelected(); /* Spoof "transformSelected" */ }
+		if (e.code == 'KeyB' && e.shiftKey == true) { this.duplicateSelected(); this.keyDown({ code: 'KeyG' }); /* Spoof "transformSelected" */ }
+		if (e.code == 'Delete' == true) this.deleteSelected();
 		if (e.code == 'KeyC' && e.ctrlKey == true) this.copySelected();
 		if (e.code == 'KeyX' && e.ctrlKey == true) this.cutSelected();
 		if (e.code == 'KeyV' && e.ctrlKey == true) this.pasteSelected();
@@ -301,7 +328,7 @@ class Editor {
 		if (e.code == 'ControlLeft') this.setSnap(null, null, null);
 	}
 
-	setSnap(translate = 1, rotate = 15, scale = 1) {
+	setSnap(translate = 15, rotate = 15, scale = 1) {
 		this.controlsTransform.setTranslationSnap(translate);
 		this.controlsTransform.setRotationSnap(rotate * (Math.PI / 180)); // Convert to radians
 		this.controlsTransform.setScaleSnap(scale);
@@ -319,10 +346,10 @@ class Editor {
 		this.controlsTransform.setMode(mode)
 		if (mode == 'translate' || mode == 'scale') {
 			this.controlsTransform.showX = this.controlsTransform.showY = true;
-			this.controlsTransform.showZ = false;
+			this.controlsTransform.showZ = true;
 		}
 		else if (mode == 'rotate') {
-			this.controlsTransform.showX = this.controlsTransform.showY = false;
+			this.controlsTransform.showX = this.controlsTransform.showY = true;
 			this.controlsTransform.showZ = true;
 		}
 

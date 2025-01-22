@@ -1,5 +1,5 @@
 .properties {
-	background-color: #1D1D1D;
+	background-color: #071222;
 	color: #DCDCDC;
 	display: flex;
 	font-size: 0.75rem;
@@ -28,8 +28,8 @@
 				button {
 					background-color: transparent;
 					border: none;
-					border-top-left-radius: 0.125rem;
-					border-bottom-left-radius: 0.125rem;
+					border-top-left-radius: 15px;
+					border-bottom-left-radius: 15px;
 					height: 1.5rem;
 					overflow: hidden;
 					padding: 0;
@@ -37,7 +37,7 @@
 					width: 1.5rem;
 
 					&.selected {
-						background-color: #303030;
+						background-color: #070b11;
 
 						&:hover {
 							&:before {
@@ -48,7 +48,7 @@
 
 					&:hover {
 						&:before {
-							background-color: rgba(255, 255, 255, 0.05);
+							background-color: rgba(0, 0, 0, 0.203);
 							position: absolute;
 							content: '';
 							width: 100%;
@@ -64,7 +64,7 @@
 	}
 
 	.tab-content {
-		background-color: #303030;
+		background-color: #070b11;
 		grid-area: tab-content;
 		overflow-x: hidden;
 		overflow-y: scroll;
@@ -73,8 +73,8 @@
 
 		.tab-pane {
 			.group {
-				background-color: #3D3D3D;
-				border-radius: 0.125rem;
+				background-color: #071222;
+				border-radius: 15px;
 				margin-bottom: 0.125rem;
 				padding: 0.5rem;
 	
@@ -131,8 +131,8 @@
 								}
 	
 								input {
-									background-color: #545454;
-									border-radius: 0.125rem;
+									background-color: #4772b352;
+									border-radius: 10px;
 									border: none;
 									color: inherit;
 									height: 1rem;
@@ -159,7 +159,7 @@
 										&:checked {
 											& + label {
 												&:before {
-													background-color: #4772B3;
+													background-color: #4772b3b1;
 													background-image: url('/img/svg/icon-checked.svg');
 												}
 											}
@@ -170,7 +170,7 @@
 											align-items: center;
 
 											&:before {
-												background-color: #545454;
+												background-color: #4772b352;
 												border-radius: 0.125rem;
 												margin-right: 0.25rem;
 												width: 0.75rem;
@@ -201,36 +201,36 @@
 								}
 	
 								textarea {
-									background-color: #545454;
-									border-radius: 0.125rem;
+									background-color: #4772b352;
+									border-radius: 15px;
 									border: none;
 									color: inherit;
 									display: block;
 									line-height: 0.75rem;
 									outline: none;
-									padding: 0.25rem;
+									padding: 15px;
 									resize: vertical;
 									text-shadow: inherit;
 									width: 100%;
 								}
 
 								.input-number {
-									border-radius: 0.125rem;
+									border-radius: 10px;
 									overflow: hidden;
 									position: relative;
 
 									&:hover,
 									&:focus-within {
 										input {
-											background-color: #797979;
+											background-color: #152236b1;
 
 											&:focus {
-												background-color: #222222;
+												background-color: #4772b3b1;
 											}
 										}
 
 										.arrow {
-											background-color: #656565;
+											background-color: #4772b352;
 											opacity: 1;
 										}
 									}

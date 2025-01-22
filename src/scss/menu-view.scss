@@ -1,5 +1,5 @@
 .menu-view {
-	background-color: #363636;
+	background-color: #4772b352;
 	color: #DCDCDC;
 	font-size: 0.75rem;
 	line-height: 0.75rem;
@@ -19,6 +19,7 @@
 		position: relative;
 
 		> li {
+			padding: 5px;
 			&:focus-within,
 			&:hover {
 				> ul {
@@ -27,12 +28,13 @@
 			}
 
 			> ul {
-				background-color: #181818;
-				border: 0.0625rem solid #242424;
+				background-color: #030a13e9;
+				border: 0.0625rem solid #071222;
+				border-radius: 15px;
 				box-shadow: 0625rem 0625rem 0rem rgba(0, 0, 0, 0.25);
 				display: none;
 				min-width: 10rem;
-				padding: 0.125rem; // 2px
+				padding: 15px; // 2px	
 				position: absolute;
 				top: 100%;
 				left: 0;
@@ -41,11 +43,13 @@
 					width: 100%;
 	
 					&:hover {
-						background-color: #4772B3;
+						background-color: #4772b352;
+						border: 0.0625rem solid #071222;
 					}
 				}
 		
 				li {
+					padding: 5px;
 					position: relative;
 				}
 			}
@@ -53,9 +57,9 @@
 	}
 
 	button {
-		background-color: transparent;
-		border: 0.0625rem solid transparent;
-		border-radius: 0.125rem;
+		background-color: #071222;
+		border: 0.0625rem solid #071222;
+		border-radius: 15px;
 		color: #DCDCDC;
 		padding: 0.125rem 0.5rem; // 3px 8px
 		text-align: left;
@@ -65,8 +69,8 @@
 		}
 
 		&:hover {
-			background-color: rgba(#4772B3, 0.7);
-			border-color: #4772B3;
+			background-color: #030a13;
+			border: 0.0625rem solid #071222;
 		}
 	}
 }

@@ -1,5 +1,5 @@
 .scene-list {
-	background-color: #282828;
+	background-color: #071222;
 	color: #DCDCDC;
 	display: flex;
 	flex-direction: column;
@@ -19,12 +19,13 @@
 	ul {
 		list-style: none;
 		margin: 0;
-		padding: 0;
+		padding: 15px;
 
 		li {
 			
 			&:nth-child(odd) {
-				background-color: #2B2B2B;
+				border-radius: 10px;
+				background-color: #030a13;
 			}
 			
 			.row {
@@ -35,7 +36,8 @@
 				z-index: 1;
 
 				&.selected {
-					background-color: #4772B3;
+					border-radius: 10px;
+					background-color: #4772b352;
 
 					label {
 						input {
@@ -66,7 +68,7 @@
 
 						&:focus-visible {
 							outline: none;
-							background: #222222;
+							background: #4772b352;
 						}
 					}
 				}

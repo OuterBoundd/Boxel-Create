@@ -12,15 +12,15 @@
             margin-bottom: 0.125rem;
 
             button {
-                background-color: #282828;
-                border: 0.0625rem solid #3D3D3D;
-                border-radius: 0.125rem;
+                background-color: #030a13;
+                border: 0.0625rem solid #071222;
+                border-radius: 15px;
                 padding: 0rem;
                 width: 2rem;
                 height: 2rem;
 
                 &.selected {
-                    background-color: #4772B3;
+                    background-color: #071222;
                 }
 
                 .icon {

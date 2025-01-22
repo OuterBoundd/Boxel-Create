@@ -67,7 +67,7 @@
 
 <template>
 	<div class="scene-list">
-		<label>Scene Objects</label>
+		<label>Workspace</label>
 		<ul :key="sceneKey">
 			<SceneItem v-for="(child, index) of sceneList.children" :data="child" @update-scene="updateSceneList" @select-object="selectObject" @delete-object="deleteObject" @toggle-visible="toggleVisible"/>
 		</ul>
